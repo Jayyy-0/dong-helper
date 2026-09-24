@@ -2,14 +2,18 @@
   "use strict";
 
   // Fallback if rates.json can't be loaded (VND per 1 unit)
-  var rates = { USD: 25960, AUD: 18290, JPY: 164, INR: 271 };
+  var rates = { USD: 25960, AUD: 18290, JPY: 164, INR: 271, EUR: 29590, GBP: 34410, SGD: 20290, CAD: 18420 };
   var ratesUpdated = null;
 
   var CUR = {
     INR: { sym: "₹", dec: 0, loc: "en-IN" },
     AUD: { sym: "A$", dec: 2, loc: "en-AU" },
     JPY: { sym: "¥", dec: 0, loc: "ja-JP" },
-    USD: { sym: "$", dec: 2, loc: "en-US" }
+    USD: { sym: "$", dec: 2, loc: "en-US" },
+    EUR: { sym: "€", dec: 2, loc: "en-IE" },
+    GBP: { sym: "£", dec: 2, loc: "en-GB" },
+    SGD: { sym: "S$", dec: 2, loc: "en-SG" },
+    CAD: { sym: "C$", dec: 2, loc: "en-CA" }
   };
 
   // Polymer notes 10k–500k, paper notes below. Colours approximate the real notes.
@@ -144,6 +148,10 @@
     if (nav.indexOf("ja") === 0) return { lang: "ja", cur: "JPY" };
     if (nav === "en-in" || nav.indexOf("hi") === 0 || /-in$/.test(nav)) return { lang: "en", cur: "INR" };
     if (nav === "en-au" || nav === "en-nz") return { lang: "en", cur: "AUD" };
+    if (nav === "en-gb") return { lang: "en", cur: "GBP" };
+    if (nav === "en-sg") return { lang: "en", cur: "SGD" };
+    if (nav === "en-ca" || nav === "fr-ca") return { lang: "en", cur: "CAD" };
+    if (/^(de|fr|es|it|nl|pt|fi|el)\b/.test(nav) || nav === "en-ie") return { lang: "en", cur: "EUR" };
     return { lang: "en", cur: "USD" };
   }
 
@@ -249,7 +257,7 @@
       $("notes").innerHTML = "";
     } else {
       $("big").textContent = state.reverse ? fmtVnd(vnd) : fmtCur(toCur(vnd, state.cur), state.cur);
-      var others = Object.keys(CUR).filter(function (c) { return c !== state.cur; })
+      var others = ["USD", "INR", "AUD", "JPY", "EUR"].filter(function (c) { return c !== state.cur; }).slice(0, 3)
         .map(function (c) { return "<span>" + fmtCur(toCur(vnd, c), c) + "</span>"; });
       if (state.reverse) others.unshift("<span>" + fmtCur(input, state.cur) + "</span>");
       $("others").innerHTML = others.join("");

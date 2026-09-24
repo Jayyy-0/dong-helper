@@ -1,4 +1,27 @@
-# Dong Helper
+# Dong Helper – Is this price fair in Vietnam?
+
+**▶ https://jayyy-0.github.io/dong-helper/**
+
+Free tool for travellers in Vietnam: check if a price is fair (2026 local prices for phở, Grab, airport taxis, massages),
+see which banknotes to hand over, split the bill, and convert Vietnamese dong at today's rate. Works offline.
+
+Daily-updated conversion tables:
+[VND→INR](https://jayyy-0.github.io/dong-helper/guides/vnd-to-inr.html) ·
+[VND→AUD](https://jayyy-0.github.io/dong-helper/guides/vnd-to-aud.html) ·
+[VND→USD](https://jayyy-0.github.io/dong-helper/guides/vnd-to-usd.html) ·
+[VND→EUR](https://jayyy-0.github.io/dong-helper/guides/vnd-to-eur.html) ·
+[VND→GBP](https://jayyy-0.github.io/dong-helper/guides/vnd-to-gbp.html) ·
+[VND→SGD](https://jayyy-0.github.io/dong-helper/guides/vnd-to-sgd.html) ·
+[VND→CAD](https://jayyy-0.github.io/dong-helper/guides/vnd-to-cad.html) ·
+[ベトナムドン→円 早見表](https://jayyy-0.github.io/dong-helper/ja/vnd-yen-hayamihyo.html)
+
+Guides: [Vegetarian food in Vietnam](https://jayyy-0.github.io/dong-helper/guides/vegetarian-vietnam.html) ·
+[Vietnam money tips](https://jayyy-0.github.io/dong-helper/guides/vietnam-money-tips.html) ·
+[ベトナムのぼったくり判定・お札早見(日本語)](https://jayyy-0.github.io/dong-helper/ja/)
+
+---
+
+## 開発者向けメモ
 
 ベトナムドンの換算・出すお札・適正価格チェック・割り勘ツール(英語/日本語、INR/AUD/JPY/USD)。
 GitHub Pagesで無料公開でき、レートはGitHub Actionsで毎日自動更新されます。
@@ -17,7 +40,8 @@ GitHub Pagesで無料公開でき、レートはGitHub Actionsで毎日自動更
 | `guides/*.html`, `ja/vietnam-okane.html` | 検索流入用のガイド記事 |
 | `sw.js`, `manifest.webmanifest` | オフライン対応・ホーム画面追加 |
 | `privacy.html` | プライバシーポリシー(連絡先を書き換える) |
-| `sitemap.xml`, `robots.txt` | `YOUR-DOMAIN` を公開URLに置き換える |
+| `sitemap.xml` | 毎日 `build_tables.py` が自動生成 |
+| `scripts/indexnow.py` + `<key>.txt` | Bing等への更新通知(毎日自動) |
 
 ## 公開手順
 

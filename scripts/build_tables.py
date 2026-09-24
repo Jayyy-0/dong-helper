@@ -22,6 +22,8 @@ VND_AMOUNTS = [10_000, 20_000, 50_000, 100_000, 200_000, 500_000,
 NOTES = [500_000, 200_000, 100_000, 50_000, 20_000, 10_000, 5_000, 2_000, 1_000]
 PHO = 55_000  # middle of the typical 40k–70k range used by the price checker
 
+EN_CODES = ["INR", "AUD", "USD", "EUR", "GBP", "SGD", "CAD"]
+
 CUR = {
     "INR": {"sym": "₹", "name": "Indian Rupees", "short": "rupees", "file": "guides/vnd-to-inr.html",
             "reverse": [100, 500, 1000, 2000, 5000, 10000, 50000]},
@@ -29,6 +31,14 @@ CUR = {
             "reverse": [10, 20, 50, 100, 200, 500, 1000]},
     "USD": {"sym": "US$", "name": "US Dollars", "short": "US dollars", "file": "guides/vnd-to-usd.html",
             "reverse": [1, 5, 10, 20, 50, 100, 500]},
+    "EUR": {"sym": "€", "name": "Euros", "short": "euros", "file": "guides/vnd-to-eur.html",
+            "reverse": [1, 5, 10, 20, 50, 100, 500]},
+    "GBP": {"sym": "£", "name": "British Pounds", "short": "British pounds", "file": "guides/vnd-to-gbp.html",
+            "reverse": [1, 5, 10, 20, 50, 100, 500]},
+    "SGD": {"sym": "S$", "name": "Singapore Dollars", "short": "Singapore dollars", "file": "guides/vnd-to-sgd.html",
+            "reverse": [1, 5, 10, 20, 50, 100, 500]},
+    "CAD": {"sym": "C$", "name": "Canadian Dollars", "short": "Canadian dollars", "file": "guides/vnd-to-cad.html",
+            "reverse": [5, 10, 20, 50, 100, 200, 500]},
     "JPY": {"sym": "¥", "file": "ja/vnd-yen-hayamihyo.html",
             "reverse": [1000, 5000, 10000, 30000, 50000, 100000]},
 }
@@ -156,7 +166,7 @@ def fmt_date(lang):
 def build_en(code):
     c = CUR[code]
     rate = R[code]
-    others = " · ".join(f'<a href="{CUR[o]["file"].split("/")[-1]}">VND to {o}</a>' for o in ("INR", "AUD", "USD") if o != code)
+    others = " · ".join(f'<a href="{CUR[o]["file"].split("/")[-1]}">VND to {o}</a>' for o in EN_CODES if o != code)
     rows = "\n".join(
         f"      <tr><td><b>{v:,} ₫</b></td><td><b>{money(v / rate, code)}</b></td>"
         f"<td>{notes_en(v)}</td><td>{buys_en(v)}</td></tr>" for v in VND_AMOUNTS)
@@ -258,10 +268,28 @@ def build_ja():
     return page("ja", CUR["JPY"]["file"], title, desc, h1, body)
 
 
+STATIC_PAGES = ["", "ja/", "guides/vegetarian-vietnam.html", "guides/vietnam-money-tips.html",
+                "ja/vietnam-okane.html"]
+
+
+def all_urls():
+    pages = STATIC_PAGES + [CUR["JPY"]["file"]] + [CUR[c]["file"] for c in EN_CODES]
+    return [SITE + p for p in pages]
+
+
+def write_sitemap():
+    day = DAY.strftime("%Y-%m-%d")
+    rows = "".join(f"  <url><loc>{u}</loc><lastmod>{day}</lastmod></url>\n" for u in all_urls())
+    xml = ('<?xml version="1.0" encoding="UTF-8"?>\n'
+           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + rows + "</urlset>\n")
+    (ROOT / "sitemap.xml").write_text(xml, encoding="utf-8", newline="\n")
+
+
 def main():
-    for code in ("INR", "AUD", "USD"):
+    for code in EN_CODES:
         (ROOT / CUR[code]["file"]).write_text(build_en(code), encoding="utf-8", newline="\n")
     (ROOT / CUR["JPY"]["file"]).write_text(build_ja(), encoding="utf-8", newline="\n")
+    write_sitemap()
     print("built tables for", DAY.date(), {k: R[k] for k in CUR})
 
 

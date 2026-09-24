@@ -12,7 +12,7 @@ import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
-CURRENCIES = ["USD", "AUD", "JPY", "INR"]
+CURRENCIES = ["USD", "AUD", "JPY", "INR", "EUR", "GBP", "SGD", "CAD"]
 OUT = Path(__file__).resolve().parent.parent / "rates.json"
 # Largest day-to-day move we accept before assuming the source is broken.
 MAX_CHANGE = 0.15
@@ -41,7 +41,8 @@ def from_fawaz():
 
 def looks_sane(new, old):
     # Rough absolute bounds (VND per unit) to catch garbage.
-    bounds = {"USD": (15000, 40000), "AUD": (10000, 30000), "JPY": (80, 400), "INR": (150, 500)}
+    bounds = {"USD": (15000, 40000), "AUD": (10000, 30000), "JPY": (80, 400), "INR": (150, 500),
+              "EUR": (18000, 45000), "GBP": (22000, 52000), "SGD": (12000, 30000), "CAD": (11000, 28000)}
     for c, (lo, hi) in bounds.items():
         if not lo <= new[c] <= hi:
             return "%s=%.2f outside %s-%s" % (c, new[c], lo, hi)
