@@ -1,9 +1,12 @@
 // Offline support: static files cache-first, rates.json network-first.
-const CACHE = "dh-v3";
+const CACHE = "dh-v4";
 const ASSETS = ["./", "index.html", "style.css", "app.js", "config.js", "shared.js", "rates.json", "icon.svg", "manifest.webmanifest"];
 
 self.addEventListener("install", (e) => {
-  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting()));
+  // cache: "reload" bypasses the browser HTTP cache so a new version never stores stale files.
+  e.waitUntil(caches.open(CACHE)
+    .then((c) => c.addAll(ASSETS.map((u) => new Request(u, { cache: "reload" }))))
+    .then(() => self.skipWaiting()));
 });
 
 self.addEventListener("activate", (e) => {
@@ -28,11 +31,17 @@ self.addEventListener("fetch", (e) => {
     return;
   }
 
+  // Stale-while-revalidate: answer from cache instantly, refresh the copy in the
+  // background so edits reach returning visitors on their next visit.
   e.respondWith(
-    caches.match(e.request, { ignoreSearch: true }).then((hit) =>
-      hit || fetch(e.request).then((res) => {
-        if (res.ok) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(e.request, copy)); }
-        return res;
+    caches.open(CACHE).then((c) =>
+      c.match(e.request, { ignoreSearch: true }).then((hit) => {
+        const net = fetch(e.request, { cache: "no-cache" }).then((res) => {
+          if (res.ok) c.put(url.origin + url.pathname, res.clone()); // one entry per page, not per ?a=…
+          return res;
+        });
+        if (hit) { e.waitUntil(net.catch(() => {})); return hit; }
+        return net;
       })
     )
   );
