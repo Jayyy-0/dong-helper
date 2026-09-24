@@ -260,8 +260,8 @@ def build_ja():
 
 def main():
     for code in ("INR", "AUD", "USD"):
-        (ROOT / CUR[code]["file"]).write_text(build_en(code), encoding="utf-8")
-    (ROOT / CUR["JPY"]["file"]).write_text(build_ja(), encoding="utf-8")
+        (ROOT / CUR[code]["file"]).write_text(build_en(code), encoding="utf-8", newline="\n")
+    (ROOT / CUR["JPY"]["file"]).write_text(build_ja(), encoding="utf-8", newline="\n")
     print("built tables for", DAY.date(), {k: R[k] for k in CUR})
 
 

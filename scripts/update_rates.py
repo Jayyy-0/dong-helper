@@ -84,7 +84,7 @@ def main():
             "note": "VND per 1 unit of each currency. Overwritten daily by GitHub Actions.",
             "rates": {c: round(rates[c], 4 if rates[c] < 1000 else 1) for c in CURRENCIES},
         }
-        OUT.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+        OUT.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8", newline="\n")
         print("updated from %s: %s" % (source, data["rates"]))
         return 0
 

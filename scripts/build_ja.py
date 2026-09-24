@@ -94,5 +94,5 @@ seo_ja = """<section class="card seo" id="price">
   </section>"""
 out = re.sub(r'<section class="card seo"[^>]*>.*?</section>', lambda m: seo_ja, out, flags=re.S)
 
-(ROOT / "ja" / "index.html").write_text(out, encoding="utf-8")
+(ROOT / "ja" / "index.html").write_text(out, encoding="utf-8", newline="\n")
 print("wrote ja/index.html")
