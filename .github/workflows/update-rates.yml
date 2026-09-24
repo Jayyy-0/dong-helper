@@ -30,7 +30,14 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "Update rates $(date -u +%Y-%m-%d)"
-          git push
+          # GitHub occasionally returns a transient 500 on push; retry a few times.
+          for i in 1 2 3; do
+            git push && exit 0
+            echo "push failed (attempt $i), retrying"
+            sleep 20
+            git pull --rebase
+          done
+          exit 1
       - name: Wait for the site to publish
         run: sleep 90
       - name: Notify search engines (IndexNow)
