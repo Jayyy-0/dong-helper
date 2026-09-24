@@ -44,6 +44,8 @@
 
   var T = {
     en: {
+      h1: "Is this price fair in Vietnam?",
+      sub: "Check local prices, pick the right banknotes and convert dong at today's rate.",
       tabConvert: "Convert", tabPrice: "Fair price?", tabSplit: "Split bill",
       notesTitle: "Banknotes to hand over",
       notesHint: "Don't mix up 20,000 and 500,000 — both are blue. Check the zeros.",
@@ -75,6 +77,8 @@
       }
     },
     ja: {
+      h1: "ベトナムのぼったくり判定・お札早見",
+      sub: "地元の相場チェック、出すお札の確認、今日のレートでのドン換算がこれ1つでできます。",
       tabConvert: "換算", tabPrice: "適正価格?", tabSplit: "割り勘",
       notesTitle: "出すお札",
       notesHint: "2万ドン札と50万ドン札はどちらも青色で取り違えやすいので、ゼロの数を確認しましょう。",
@@ -140,9 +144,12 @@
   }
 
   var q = new URLSearchParams(location.search);
+  // Pages below the site root (e.g. /ja/) set data-root="../" and their own default language.
+  var html = document.documentElement;
+  var ROOT = html.getAttribute("data-root") || "";
   var d = detect();
-  state.lang = q.get("lang") || load("lang") || d.lang;
-  state.cur = q.get("c") || load("cur") || d.cur;
+  state.lang = q.get("lang") || html.getAttribute("data-default-lang") || load("lang") || d.lang;
+  state.cur = q.get("c") || load("cur") || html.getAttribute("data-default-cur") || d.cur;
   if (!T[state.lang]) state.lang = "en";
   if (!CUR[state.cur]) state.cur = "USD";
 
@@ -337,7 +344,7 @@
     box.querySelectorAll("a").forEach(function (a) { a.remove(); });
     GUIDES[state.lang].forEach(function (g) {
       var a = document.createElement("a");
-      a.href = g[0]; a.textContent = g[1];
+      a.href = ROOT + g[0]; a.textContent = g[1];
       box.appendChild(a);
     });
   }
@@ -394,7 +401,15 @@
   });
   document.querySelectorAll("[data-lang]").forEach(function (b) {
     b.addEventListener("click", function () {
-      state.lang = b.getAttribute("data-lang"); store("lang", state.lang); renderAll();
+      state.lang = b.getAttribute("data-lang"); store("lang", state.lang);
+      // Each language has its own URL (for search engines); jump there if we're on the other one.
+      var pageLang = html.getAttribute("data-default-lang") || "en";
+      if (state.lang !== pageLang) {
+        var target = state.lang === "ja" ? ROOT + "ja/" : (ROOT || "./");
+        location.href = target + "?c=" + state.cur + "&lang=" + state.lang;
+        return;
+      }
+      renderAll();
     });
   });
   document.querySelectorAll("[data-tab]").forEach(function (b) {
@@ -439,7 +454,7 @@
   renderChips();
   renderAll();
 
-  fetch("rates.json", { cache: "no-cache" })
+  fetch(ROOT + "rates.json", { cache: "no-cache" })
     .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function (j) {
       var ok = j && j.rates && Object.keys(CUR).every(function (c) { return j.rates[c] > 0; });
@@ -450,6 +465,6 @@
     .catch(function () { renderRateInfo(); });
 
   if ("serviceWorker" in navigator && location.protocol === "https:") {
-    navigator.serviceWorker.register("sw.js").catch(function () {});
+    navigator.serviceWorker.register(ROOT + "sw.js").catch(function () {});
   }
 })();

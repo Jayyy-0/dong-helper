@@ -13,7 +13,8 @@ GitHub Pagesで無料公開でき、レートはGitHub Actionsで毎日自動更
 | `rates.json` | 為替レート(毎日自動で上書き) |
 | `scripts/update_rates.py` | レート取得スクリプト(予備API・異常値チェック付き) |
 | `.github/workflows/update-rates.yml` | 毎日 07:00(ベトナム時間)に実行 |
-| `guides/*.html`, `ja/*.html` | 検索流入用のガイド記事 |
+| `ja/index.html` | 日本語版のトップ(`python scripts/build_ja.py` で `index.html` から自動生成。直接編集しない) |
+| `guides/*.html`, `ja/vietnam-okane.html` | 検索流入用のガイド記事 |
 | `sw.js`, `manifest.webmanifest` | オフライン対応・ホーム画面追加 |
 | `privacy.html` | プライバシーポリシー(連絡先を書き換える) |
 | `sitemap.xml`, `robots.txt` | `YOUR-DOMAIN` を公開URLに置き換える |

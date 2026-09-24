@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="ja" data-root="../" data-default-lang="ja" data-default-cur="JPY">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ベトナムのぼったくり判定・お札早見・ドン円換算【2026年の相場】| Dong Helper</title>
+<meta name="description" content="ベトナム旅行で「この値段は高すぎ?」をすぐ判定。フォー・Grab・空港タクシー・マッサージの2026年の相場、出すお札(2万と50万の見分け方)、今日のレートでのドン→円換算。無料・オフラインでも使えます。">
+<meta name="theme-color" content="#c8102e">
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../icon-192.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="canonical" href="https://jayyy-0.github.io/dong-helper/ja/">
+<link rel="alternate" hreflang="en" href="https://jayyy-0.github.io/dong-helper/">
+<link rel="alternate" hreflang="ja" href="https://jayyy-0.github.io/dong-helper/ja/">
+<link rel="alternate" hreflang="x-default" href="https://jayyy-0.github.io/dong-helper/">
+<meta property="og:title" content="ベトナムのぼったくり判定・お札早見">
+<meta property="og:description" content="2026年の相場チェック、出すお札、ドン円換算。ベトナム旅行者向けの無料ツール。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://jayyy-0.github.io/dong-helper/ja/">
+<!-- Google Search Console の確認タグはここに入れる -->
+<link rel="stylesheet" href="../style.css">
+<script src="../config.js"></script>
+<script src="../shared.js"></script>
+<!-- Google AdSense: 独自ドメイン取得・審査通過後にここへ貼る -->
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <a class="brand" href="./">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#c8102e"/><path fill="#f2b705" d="M32 12l5.6 17.2H55L40.7 39.8l5.5 17.2L32 46.4 17.8 57l5.5-17.2L9 29.2h17.4z"/></svg>
+      <span>Dong Helper</span>
+    </a>
+    <span class="spacer"></span>
+    <select class="cur" id="cur" aria-label="Currency">
+      <option value="INR">₹ INR</option>
+      <option value="AUD">A$ AUD</option>
+      <option value="JPY">¥ JPY</option>
+      <option value="USD">$ USD</option>
+    </select>
+    <div class="seg" role="group" aria-label="Language">
+      <button type="button" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" data-lang="ja" aria-pressed="false">日本語</button>
+    </div>
+  </header>
+
+  <h1 class="lead" data-i18n="h1">ベトナムのぼったくり判定・お札早見</h1>
+  <p class="sub" data-i18n="sub">地元の相場チェック、出すお札の確認、今日のレートでのドン換算がこれ1つでできます。</p>
+
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-tab="convert" aria-selected="true" data-i18n="tabConvert">換算</button>
+    <button role="tab" data-tab="price" aria-selected="false" data-i18n="tabPrice">適正価格?</button>
+    <button role="tab" data-tab="split" aria-selected="false" data-i18n="tabSplit">割り勘</button>
+  </nav>
+
+  <!-- ===== Convert ===== -->
+  <section data-panel="convert">
+    <div class="card">
+      <div class="amount">
+        <input id="amount" inputmode="numeric" autocomplete="off" placeholder="150,000" aria-label="Amount">
+        <span class="unit" id="unit">₫</span>
+        <button class="swap" id="swap" type="button" aria-label="Swap direction">⇄</button>
+      </div>
+      <div class="chips" id="chips"></div>
+    </div>
+
+    <div class="card">
+      <div class="big" id="big">—</div>
+      <div class="others" id="others"></div>
+      <div class="tip" id="tip"></div>
+    </div>
+
+    <div class="card">
+      <h2 data-i18n="notesTitle">出すお札</h2>
+      <div class="notes" id="notes"></div>
+      <p class="small" id="notesHint"></p>
+    </div>
+  </section>
+
+  <!-- ===== Fair price ===== -->
+  <section data-panel="price" class="hidden">
+    <div class="card">
+      <div class="field">
+        <label for="item" data-i18n="priceItem">何を買いますか?</label>
+        <select id="item"></select>
+      </div>
+      <div class="small" data-i18n="priceTypical">一般的な価格</div>
+      <div class="range" id="range">—</div>
+      <div class="small" id="rangeConv"></div>
+      <div class="field" style="margin-top:12px">
+        <label for="quoted" data-i18n="priceQuoted">言われた金額(ドン)</label>
+        <input id="quoted" inputmode="numeric" autocomplete="off" placeholder="e.g. 80,000">
+      </div>
+      <div id="verdict" class="verdict hidden"></div>
+      <p class="small" data-i18n="priceNote">Rough 2026 guide for local shops in Hanoi, Da Nang and Ho Chi Minh City. Tourist streets, hotels and airports cost more.</p>
+    </div>
+  </section>
+
+  <!-- ===== Split ===== -->
+  <section data-panel="split" class="hidden">
+    <div class="card">
+      <div class="field">
+        <label for="bill" data-i18n="splitTotal">合計金額(ドン)</label>
+        <input id="bill" inputmode="numeric" autocomplete="off" placeholder="850,000">
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="people" data-i18n="splitPeople">人数</label>
+          <select id="people"></select>
+        </div>
+        <div class="field">
+          <label for="tipPct" data-i18n="splitTip">チップ</label>
+          <select id="tipPct">
+            <option value="0">0%</option><option value="5">5%</option><option value="10">10%</option>
+          </select>
+        </div>
+      </div>
+      <div class="small" data-i18n="splitEach">1人あたり</div>
+      <div class="big" id="each">—</div>
+      <div class="others" id="eachConv"></div>
+      <p class="small" data-i18n="splitNote">Tipping isn't expected in Vietnam, but it's appreciated at spas and on tours. Check the bill for a service charge (phí phục vụ) first.</p>
+    </div>
+  </section>
+
+  <div class="actions">
+    <button class="btn primary" id="share" type="button" data-i18n="share">このツールを共有</button>
+    <button class="btn hidden" id="install" type="button" data-i18n="install">ホーム画面に追加</button>
+  </div>
+
+  <!-- ===== Trip essentials (affiliate) ===== -->
+  <section class="card" style="margin-top:16px">
+    <h2><span data-i18n="essTitle">旅の必需品</span><span class="pr" data-i18n="prLabel">PR</span></h2>
+    <div class="ess" id="ess"></div>
+  </section>
+
+  <!-- Ad slot (AdSense) — 審査通過後にコメントを外す
+  <div class="card"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXX" data-ad-slot="XXXX" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+  -->
+
+  <section class="card guides" id="guides">
+    <h2 data-i18n="guidesTitle">ガイド</h2>
+  </section>
+
+  <!-- Static, crawlable content: this is what search engines read and rank. -->
+  <section class="card seo">
+    <h2>ベトナムの物価・相場一覧(2026年)</h2>
+    <p>ハノイ・ダナン・ホーチミンの地元の店で普通に払う金額の目安です。観光地、ホテル、空港では高くなります。右の列を超える金額を言われたら、聞き直すか近くの店と比べましょう。</p>
+    <table>
+      <tr><th>品目</th><th>相場</th><th>これ以上は高すぎ</th></tr>
+      <tr><td>フォー</td><td>4万〜7万ドン(約240〜430円)</td><td>11万ドン</td></tr>
+      <tr><td>バインミー</td><td>2万〜4万ドン(約120〜240円)</td><td>7万ドン</td></tr>
+      <tr><td>精進料理のご飯セット(コムチャイ)</td><td>3万〜5.5万ドン</td><td>9万ドン</td></tr>
+      <tr><td>ベトナムコーヒー(練乳・氷)</td><td>2万〜4万ドン</td><td>7.5万ドン</td></tr>
+      <tr><td>ココナッツジュース</td><td>2万〜4万ドン</td><td>7万ドン</td></tr>
+      <tr><td>地ビール</td><td>1.5万〜3.5万ドン</td><td>7万ドン</td></tr>
+      <tr><td>水 500ml</td><td>5千〜1万ドン</td><td>2.5万ドン</td></tr>
+      <tr><td>Grabバイク 約3km</td><td>1.5万〜3万ドン</td><td>6万ドン</td></tr>
+      <tr><td>Grabカー 約5km</td><td>5.5万〜10万ドン</td><td>18万ドン</td></tr>
+      <tr><td>空港→市内 タクシー</td><td>15万〜35万ドン(約900〜2,100円)</td><td>60万ドン</td></tr>
+      <tr><td>足マッサージ 60分</td><td>15万〜30万ドン</td><td>55万ドン</td></tr>
+      <tr><td>ランドリー 1kg</td><td>2.5万〜4万ドン</td><td>8万ドン</td></tr>
+      <tr><td>旅行者SIM 30日</td><td>15万〜30万ドン</td><td>50万ドン</td></tr>
+    </table>
+    <p class="small">円は1円 ≈ 164ドンで計算した目安です。上のツールは毎日更新のレートで計算します。</p>
+
+    <h2>取り違えやすいベトナムのお札</h2>
+    <ul>
+      <li><b>2万ドン札と50万ドン札</b>はどちらも青色です。一番多い間違いで、「お札のすり替え」トラブルの原因にもなります。</li>
+      <li><b>1万ドン札と20万ドン札</b>は、暗い所では色が似て見えます(茶・黄とオレンジ・赤)。</li>
+      <li>高額札で払うときは金額を声に出し、お釣りはその場で数えましょう。</li>
+    </ul>
+
+    <h2>よくある質問</h2>
+    <h3>メニューの「50k」とは?</h3>
+    <p>5万ドンのことです。ベトナムでは「50.000」のように、ピリオドを桁の区切りに使うこともあります。</p>
+    <h3>10万ドンは日本円でいくら?</h3>
+    <p>約610円です(1円 ≈ 164ドンの場合)。暗算なら「ゼロを3つ取って約6倍」で円になります。</p>
+    <h3>ベトナムでチップは必要?</h3>
+    <p>地元の食堂では不要です。スパやツアーでは2万〜5万ドン程度渡すと喜ばれます。先に伝票のサービス料を確認しましょう。</p>
+    <h3>ぼったくられたと思ったら?</h3>
+    <p>まず金額を紙やスマホに書いてもらい、ゼロの数を確認しましょう。Grabなら事前に料金が確定するので、タクシーやバイクタクシーの料金トラブルを避けられます。</p>
+  </section>
+
+  <footer>
+    <p id="rateInfo"></p>
+    <p><a href="https://www.exchangerate-api.com" target="_blank" rel="noopener">Rates By Exchange Rate API</a></p>
+    <p id="disclosure" data-i18n="disclosure">Some links are affiliate links: if you book through them we may earn a small commission at no extra cost to you. It keeps this tool free.</p>
+    <p id="tipjar" class="hidden"><a target="_blank" rel="noopener">☕ Buy me a coffee</a></p>
+    <p><a href="../privacy.html" data-i18n="privacy">プライバシー</a></p>
+  </footer>
+</div>
+
+<script src="../app.js"></script>
+</body>
+</html>

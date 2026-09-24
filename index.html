@@ -3,17 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Dong Helper – Vietnam Dong Converter & Price Checker</title>
-<meta name="description" content="Convert Vietnamese dong to rupees, Australian dollars, yen and US dollars in one tap. See which banknotes to hand over and check if a price is fair. Rates updated daily. Works offline.">
+<title>Is This Price Fair in Vietnam? 2026 Price Checker & Banknote Guide | Dong Helper</title>
+<meta name="description" content="Getting overcharged in Vietnam? Check 2026 local prices for pho, Grab, airport taxis and massages, see which banknotes to hand over, and convert dong to ₹, A$, ¥ or $ at today's rate. Free, works offline.">
 <meta name="theme-color" content="#c8102e">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="alternate" hreflang="en" href="./">
-<link rel="alternate" hreflang="ja" href="./?lang=ja">
-<meta property="og:title" content="Dong Helper – Vietnam money made easy">
-<meta property="og:description" content="VND → ₹ / A$ / ¥ / $ converter, banknote picker and fair-price checker for travellers in Vietnam.">
+<link rel="canonical" href="https://jayyy-0.github.io/dong-helper/">
+<link rel="alternate" hreflang="en" href="https://jayyy-0.github.io/dong-helper/">
+<link rel="alternate" hreflang="ja" href="https://jayyy-0.github.io/dong-helper/ja/">
+<link rel="alternate" hreflang="x-default" href="https://jayyy-0.github.io/dong-helper/">
+<meta property="og:title" content="Is this price fair in Vietnam?">
+<meta property="og:description" content="2026 local prices, banknote picker and dong converter for travellers in Vietnam.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://jayyy-0.github.io/dong-helper/">
+<!-- Google Search Console の確認タグはここに入れる -->
 <link rel="stylesheet" href="style.css">
 <script src="config.js"></script>
 <script src="shared.js"></script>
@@ -39,6 +43,9 @@
       <button type="button" data-lang="ja" aria-pressed="false">日本語</button>
     </div>
   </header>
+
+  <h1 class="lead" data-i18n="h1">Is this price fair in Vietnam?</h1>
+  <p class="sub" data-i18n="sub">Check local prices, pick the right banknotes and convert dong at today's rate.</p>
 
   <nav class="tabs" role="tablist">
     <button role="tab" data-tab="convert" aria-selected="true" data-i18n="tabConvert">Convert</button>
@@ -132,6 +139,43 @@
 
   <section class="card guides" id="guides">
     <h2 data-i18n="guidesTitle">Guides</h2>
+  </section>
+
+  <!-- Static, crawlable content: this is what search engines read and rank. -->
+  <section class="card seo">
+    <h2>Typical prices in Vietnam (2026)</h2>
+    <p>What you'd normally pay at ordinary local shops in Hanoi, Da Nang and Ho Chi Minh City. Tourist streets, hotels and airports charge more. If a quote is above the last column, ask again or compare nearby.</p>
+    <table>
+      <tr><th>Item</th><th>Normal</th><th>Too high above</th></tr>
+      <tr><td>Phở (noodle soup)</td><td>40k–70k ₫</td><td>110k ₫</td></tr>
+      <tr><td>Bánh mì</td><td>20k–40k ₫</td><td>70k ₫</td></tr>
+      <tr><td>Vegetarian rice plate (cơm chay)</td><td>30k–55k ₫</td><td>90k ₫</td></tr>
+      <tr><td>Iced milk coffee</td><td>20k–40k ₫</td><td>75k ₫</td></tr>
+      <tr><td>Fresh coconut</td><td>20k–40k ₫</td><td>70k ₫</td></tr>
+      <tr><td>Local beer</td><td>15k–35k ₫</td><td>70k ₫</td></tr>
+      <tr><td>Water 500 ml</td><td>5k–10k ₫</td><td>25k ₫</td></tr>
+      <tr><td>Grab bike, ~3 km</td><td>15k–30k ₫</td><td>60k ₫</td></tr>
+      <tr><td>Grab car, ~5 km</td><td>55k–100k ₫</td><td>180k ₫</td></tr>
+      <tr><td>Airport taxi to centre</td><td>150k–350k ₫</td><td>600k ₫</td></tr>
+      <tr><td>Foot massage, 60 min</td><td>150k–300k ₫</td><td>550k ₫</td></tr>
+      <tr><td>Laundry, per kg</td><td>25k–40k ₫</td><td>80k ₫</td></tr>
+      <tr><td>Tourist SIM, 30 days</td><td>150k–300k ₫</td><td>500k ₫</td></tr>
+    </table>
+
+    <h2>Vietnamese banknotes you can mix up</h2>
+    <ul>
+      <li><b>20,000 and 500,000</b> are both blue. This is the most common mistake and the base of the “note swap” trick.</li>
+      <li><b>10,000 and 200,000</b> look similar in dim light (brown-yellow vs orange-red).</li>
+      <li>Say the amount out loud when you pay with a big note, and count your change.</li>
+    </ul>
+
+    <h2>FAQ</h2>
+    <h3>What does “50k” mean on a menu?</h3>
+    <p>50,000 dong. Vietnam also writes it as 50.000, with a dot as the thousands separator.</p>
+    <h3>How much is 100,000 dong?</h3>
+    <p>Roughly ₹370, A$5.5, ¥610 or US$3.9. The converter above uses today's rate.</p>
+    <h3>Do I need to tip in Vietnam?</h3>
+    <p>Not at local eateries. At spas and on tours, 20k–50k ₫ is appreciated. Check the bill for a service charge first.</p>
   </section>
 
   <footer>
