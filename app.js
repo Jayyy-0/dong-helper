@@ -113,10 +113,14 @@
 
   var GUIDES = {
     en: [
+      ["guides/vnd-to-inr.html", "Dong to rupees table (updated daily)"],
+      ["guides/vnd-to-aud.html", "Dong to Australian dollars table (updated daily)"],
+      ["guides/vnd-to-usd.html", "Dong to US dollars table (updated daily)"],
       ["guides/vegetarian-vietnam.html", "Vegetarian food in Vietnam: phrases, what to order, where to eat"],
       ["guides/vietnam-money-tips.html", "Vietnam money tips: banknotes, ATMs, cards and common tricks"]
     ],
     ja: [
+      ["ja/vnd-yen-hayamihyo.html", "ベトナムドン→円 早見表(毎日更新)"],
       ["ja/vietnam-okane.html", "ベトナムのお金ガイド:お札の見分け方・両替・ATM・注意点"],
       ["guides/vietnam-money-tips.html", "Vietnam money tips (English)"]
     ]

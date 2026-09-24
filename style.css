@@ -176,3 +176,8 @@ footer a { color: var(--muted); }
 .seo table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
 .seo th, .seo td { text-align: left; padding: 6px 4px; border-bottom: 1px solid var(--line); vertical-align: top; }
 .seo th { color: var(--muted); font-weight: 600; }
+@media (max-width: 400px) {
+  .article { padding: 14px; }
+  .article table { font-size: 14px; }
+  .article th, .article td { padding: 7px 4px; }
+}

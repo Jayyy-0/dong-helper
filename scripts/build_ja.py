@@ -54,7 +54,7 @@ for a, b in static.items():
     out = out.replace(a, b)
 
 # --- crawlable content section in Japanese ---
-seo_ja = """<section class="card seo">
+seo_ja = """<section class="card seo" id="price">
     <h2>ベトナムの物価・相場一覧(2026年)</h2>
     <p>ハノイ・ダナン・ホーチミンの地元の店で普通に払う金額の目安です。観光地、ホテル、空港では高くなります。右の列を超える金額を言われたら、聞き直すか近くの店と比べましょう。</p>
     <table>
@@ -86,13 +86,13 @@ seo_ja = """<section class="card seo">
     <h3>メニューの「50k」とは?</h3>
     <p>5万ドンのことです。ベトナムでは「50.000」のように、ピリオドを桁の区切りに使うこともあります。</p>
     <h3>10万ドンは日本円でいくら?</h3>
-    <p>約610円です(1円 ≈ 164ドンの場合)。暗算なら「ゼロを3つ取って約6倍」で円になります。</p>
+    <p>約610円です(1円 ≈ 164ドンの場合)。暗算なら「ゼロを3つ取って約6倍」で円になります。1万〜1000万ドンの一覧は<a href="vnd-yen-hayamihyo.html">ベトナムドン→円 早見表</a>(毎日更新)をどうぞ。</p>
     <h3>ベトナムでチップは必要?</h3>
     <p>地元の食堂では不要です。スパやツアーでは2万〜5万ドン程度渡すと喜ばれます。先に伝票のサービス料を確認しましょう。</p>
     <h3>ぼったくられたと思ったら?</h3>
     <p>まず金額を紙やスマホに書いてもらい、ゼロの数を確認しましょう。Grabなら事前に料金が確定するので、タクシーやバイクタクシーの料金トラブルを避けられます。</p>
   </section>"""
-out = re.sub(r'<section class="card seo">.*?</section>', lambda m: seo_ja, out, flags=re.S)
+out = re.sub(r'<section class="card seo"[^>]*>.*?</section>', lambda m: seo_ja, out, flags=re.S)
 
 (ROOT / "ja" / "index.html").write_text(out, encoding="utf-8")
 print("wrote ja/index.html")
