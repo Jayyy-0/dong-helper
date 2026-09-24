@@ -1,0 +1,12 @@
+{
+  "updated": "2026-09-24T13:51:11Z",
+  "source": "open.er-api.com",
+  "base": "VND",
+  "note": "VND per 1 unit of each currency. Overwritten daily by GitHub Actions.",
+  "rates": {
+    "USD": 25961.7,
+    "AUD": 18288.8,
+    "JPY": 164.1823,
+    "INR": 270.973
+  }
+}

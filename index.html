@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dong Helper – Vietnam Dong Converter & Price Checker</title>
+<meta name="description" content="Convert Vietnamese dong to rupees, Australian dollars, yen and US dollars in one tap. See which banknotes to hand over and check if a price is fair. Rates updated daily. Works offline.">
+<meta name="theme-color" content="#c8102e">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="alternate" hreflang="en" href="./">
+<link rel="alternate" hreflang="ja" href="./?lang=ja">
+<meta property="og:title" content="Dong Helper – Vietnam money made easy">
+<meta property="og:description" content="VND → ₹ / A$ / ¥ / $ converter, banknote picker and fair-price checker for travellers in Vietnam.">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="style.css">
+<script src="config.js"></script>
+<script src="shared.js"></script>
+<!-- Google AdSense: 独自ドメイン取得・審査通過後にここへ貼る -->
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <a class="brand" href="./">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#c8102e"/><path fill="#f2b705" d="M32 12l5.6 17.2H55L40.7 39.8l5.5 17.2L32 46.4 17.8 57l5.5-17.2L9 29.2h17.4z"/></svg>
+      <span>Dong Helper</span>
+    </a>
+    <span class="spacer"></span>
+    <select class="cur" id="cur" aria-label="Currency">
+      <option value="INR">₹ INR</option>
+      <option value="AUD">A$ AUD</option>
+      <option value="JPY">¥ JPY</option>
+      <option value="USD">$ USD</option>
+    </select>
+    <div class="seg" role="group" aria-label="Language">
+      <button type="button" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" data-lang="ja" aria-pressed="false">日本語</button>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-tab="convert" aria-selected="true" data-i18n="tabConvert">Convert</button>
+    <button role="tab" data-tab="price" aria-selected="false" data-i18n="tabPrice">Fair price?</button>
+    <button role="tab" data-tab="split" aria-selected="false" data-i18n="tabSplit">Split bill</button>
+  </nav>
+
+  <!-- ===== Convert ===== -->
+  <section data-panel="convert">
+    <div class="card">
+      <div class="amount">
+        <input id="amount" inputmode="numeric" autocomplete="off" placeholder="150,000" aria-label="Amount">
+        <span class="unit" id="unit">₫</span>
+        <button class="swap" id="swap" type="button" aria-label="Swap direction">⇄</button>
+      </div>
+      <div class="chips" id="chips"></div>
+    </div>
+
+    <div class="card">
+      <div class="big" id="big">—</div>
+      <div class="others" id="others"></div>
+      <div class="tip" id="tip"></div>
+    </div>
+
+    <div class="card">
+      <h2 data-i18n="notesTitle">Banknotes to hand over</h2>
+      <div class="notes" id="notes"></div>
+      <p class="small" id="notesHint"></p>
+    </div>
+  </section>
+
+  <!-- ===== Fair price ===== -->
+  <section data-panel="price" class="hidden">
+    <div class="card">
+      <div class="field">
+        <label for="item" data-i18n="priceItem">What are you buying?</label>
+        <select id="item"></select>
+      </div>
+      <div class="small" data-i18n="priceTypical">Typical price</div>
+      <div class="range" id="range">—</div>
+      <div class="small" id="rangeConv"></div>
+      <div class="field" style="margin-top:12px">
+        <label for="quoted" data-i18n="priceQuoted">Price you were quoted (₫)</label>
+        <input id="quoted" inputmode="numeric" autocomplete="off" placeholder="e.g. 80,000">
+      </div>
+      <div id="verdict" class="verdict hidden"></div>
+      <p class="small" data-i18n="priceNote">Rough 2026 guide for local shops in Hanoi, Da Nang and Ho Chi Minh City. Tourist streets, hotels and airports cost more.</p>
+    </div>
+  </section>
+
+  <!-- ===== Split ===== -->
+  <section data-panel="split" class="hidden">
+    <div class="card">
+      <div class="field">
+        <label for="bill" data-i18n="splitTotal">Bill total (₫)</label>
+        <input id="bill" inputmode="numeric" autocomplete="off" placeholder="850,000">
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="people" data-i18n="splitPeople">People</label>
+          <select id="people"></select>
+        </div>
+        <div class="field">
+          <label for="tipPct" data-i18n="splitTip">Tip</label>
+          <select id="tipPct">
+            <option value="0">0%</option><option value="5">5%</option><option value="10">10%</option>
+          </select>
+        </div>
+      </div>
+      <div class="small" data-i18n="splitEach">Each person pays</div>
+      <div class="big" id="each">—</div>
+      <div class="others" id="eachConv"></div>
+      <p class="small" data-i18n="splitNote">Tipping isn't expected in Vietnam, but it's appreciated at spas and on tours. Check the bill for a service charge (phí phục vụ) first.</p>
+    </div>
+  </section>
+
+  <div class="actions">
+    <button class="btn primary" id="share" type="button" data-i18n="share">Share this tool</button>
+    <button class="btn hidden" id="install" type="button" data-i18n="install">Add to home screen</button>
+  </div>
+
+  <!-- ===== Trip essentials (affiliate) ===== -->
+  <section class="card" style="margin-top:16px">
+    <h2><span data-i18n="essTitle">Trip essentials</span><span class="pr" data-i18n="prLabel">Ad</span></h2>
+    <div class="ess" id="ess"></div>
+  </section>
+
+  <!-- Ad slot (AdSense) — 審査通過後にコメントを外す
+  <div class="card"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXX" data-ad-slot="XXXX" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+  -->
+
+  <section class="card guides" id="guides">
+    <h2 data-i18n="guidesTitle">Guides</h2>
+  </section>
+
+  <footer>
+    <p id="rateInfo"></p>
+    <p><a href="https://www.exchangerate-api.com" target="_blank" rel="noopener">Rates By Exchange Rate API</a></p>
+    <p id="disclosure" data-i18n="disclosure">Some links are affiliate links: if you book through them we may earn a small commission at no extra cost to you. It keeps this tool free.</p>
+    <p id="tipjar" class="hidden"><a target="_blank" rel="noopener">☕ Buy me a coffee</a></p>
+    <p><a href="privacy.html" data-i18n="privacy">Privacy</a></p>
+  </footer>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
