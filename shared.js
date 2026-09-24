@@ -26,6 +26,8 @@
   }
 
   if (cfg.goatcounter) {
+    // Count by page only; ?a=…&c=… would otherwise split one page into many rows.
+    window.goatcounter = { path: function () { return location.pathname; } };
     var s = document.createElement("script");
     s.async = true;
     s.src = "https://gc.zgo.at/count.js";
