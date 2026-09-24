@@ -1,5 +1,5 @@
 // Offline support: static files cache-first, rates.json network-first.
-const CACHE = "dh-v1";
+const CACHE = "dh-v2";
 const ASSETS = ["./", "index.html", "style.css", "app.js", "config.js", "shared.js", "rates.json", "icon.svg", "manifest.webmanifest"];
 
 self.addEventListener("install", (e) => {

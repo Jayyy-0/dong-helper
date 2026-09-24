@@ -16,7 +16,7 @@ window.DH_CONFIG = {
   tipJar: "",
 
   // GoatCounter(無料・Cookie不要)のコード。例: "donghelper" → donghelper.goatcounter.com
-  goatcounter: "",
+  goatcounter: "jayyy-0",
 
   affiliates: {
     // eSIM(データ通信)— Airalo Partner Program
