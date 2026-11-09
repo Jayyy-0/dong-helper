@@ -1,16 +1,16 @@
 {
-  "updated": "2026-11-08T04:59:04Z",
+  "updated": "2026-11-09T05:08:36Z",
   "source": "open.er-api.com",
   "base": "VND",
   "note": "VND per 1 unit of each currency. Overwritten daily by GitHub Actions.",
   "rates": {
-    "USD": 25602.6,
-    "AUD": 17607.6,
-    "JPY": 161.7158,
-    "INR": 272.0367,
-    "EUR": 28580.9,
-    "GBP": 34252.2,
-    "SGD": 19977.9,
-    "CAD": 18166.1
+    "USD": 25611.6,
+    "AUD": 17592.8,
+    "JPY": 161.7645,
+    "INR": 272.3259,
+    "EUR": 28555.0,
+    "GBP": 34223.3,
+    "SGD": 19964.0,
+    "CAD": 18144.0
   }
 }
